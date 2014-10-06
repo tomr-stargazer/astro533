@@ -13,3 +13,28 @@ magnitudes assuming H_0 = 100km/s), sersic_n (5 values of sersic index in
 ugriz, use the r-band value), and zdist (the redshift).
 
 """
+
+from __future__ import division
+
+import os.path
+
+import numpy as np
+import matplotlib.pyplot as plt
+from astropy.table import Table
+import astropy.units as u
+import astropy.constants as c
+
+data_path = os.path.expanduser("~/Dropbox/Grad School/Courses/galaxies_astro533/")
+
+sdss_table = Table.read(data_path+'lowz_catalog.dr4.fits')
+
+absmag = sdss_table['ABSMAG'] #absolute magnitude 
+g_column = absmag[:,1]
+r_column = absmag[:,2]
+
+sersic = sdss_table['SERSIC_N']
+spirals = sersic[:,2] < 2
+ellipticals = sersic[:,2] >= 2
+
+z_column = sdss_table['ZDIST']
+
