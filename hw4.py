@@ -41,14 +41,18 @@ z_column = sdss_table['ZDIST']
 H_0 = 100 * u.km / u.s / u.Mpc
 distance = (c.c * z_column / H_0).to(u.Mpc)
 
-def magnitude_bin_stuff(n_bins=10):
+def magnitude_bin_stuff(n_bins=10, selection=None):
 
-    hist, bin_edges = np.histogram(r_column, bins=n_bins)
+    if selection is None:
+        selection = np.ones_like(r_column, dtype='bool')
+
+    hist, bin_edges = np.histogram(r_column[selection], bins=n_bins)
  
     max_distance = np.zeros_like(hist) * u.Mpc
     bin_centers = np.zeros_like(hist, dtype='float')
 
     bin_width = np.abs(bin_edges[0] - bin_edges[1])
+
 
     for i in range(len(hist)):
 
@@ -57,7 +61,7 @@ def magnitude_bin_stuff(n_bins=10):
 
         bin_centers[i] = np.mean((bin_max, bin_min))
 
-        max_distance[i] = np.max( distance [((r_column > bin_min) & (r_column < bin_max))])
+        max_distance[i] = np.max( distance [((r_column > bin_min) & (r_column < bin_max) & selection)])
 
     V_max = 4/3 * np.pi * max_distance**3
 
