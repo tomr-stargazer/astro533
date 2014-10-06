@@ -46,7 +46,9 @@ def magnitude_bin_stuff(n_bins=10):
     hist, bin_edges = np.histogram(r_column, bins=n_bins)
  
     max_distance = np.zeros_like(hist) * u.Mpc
-    bin_centers = np.zeros_like(hist)
+    bin_centers = np.zeros_like(hist, dtype='float')
+
+    bin_width = np.abs(bin_edges[0] - bin_edges[1])
 
     for i in range(len(hist)):
 
@@ -59,6 +61,6 @@ def magnitude_bin_stuff(n_bins=10):
 
     V_max = 4/3 * np.pi * max_distance**3
 
-    luminosity_function = hist / V_max
+    luminosity_function = hist / (V_max * bin_width)
 
     return luminosity_function, bin_centers, V_max, max_distance, hist
