@@ -38,3 +38,27 @@ ellipticals = sersic[:,2] >= 2
 
 z_column = sdss_table['ZDIST']
 
+H_0 = 100 * u.km / u.s / u.Mpc
+distance = (c.c * z_column / H_0).to(u.Mpc)
+
+def magnitude_bin_stuff(n_bins=10):
+
+    hist, bin_edges = np.histogram(r_column, bins=n_bins)
+ 
+    max_distance = np.zeros_like(hist) * u.Mpc
+    bin_centers = np.zeros_like(hist)
+
+    for i in range(len(hist)):
+
+        bin_min = bin_edges[i]
+        bin_max = bin_edges[i+1]
+
+        bin_centers[i] = np.mean((bin_max, bin_min))
+
+        max_distance[i] = np.max( distance [((r_column > bin_min) & (r_column < bin_max))])
+
+    V_max = 4/3 * np.pi * max_distance**3
+
+    luminosity_function = hist / V_max
+
+    return luminosity_function, bin_centers, V_max, max_distance, hist
