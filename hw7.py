@@ -27,11 +27,17 @@ M_s_array = [M_s]
 M_zg_array =[M_zg]
 M_zs_array =[M_zs]
 
+i=0 
 while M_g > 0:
+    i+=1
+    print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
 
     # metallicity terms
     Z_g = M_zg / M_g
-    Z_s = M_zs / M_s
+    try:
+        Z_s = M_zs / M_s
+    except ZeroDivisionError:
+        Z_s = 0
 
     # relations between differential quantities
 
@@ -45,12 +51,12 @@ while M_g > 0:
     M_zg += dM_zg
     M_zs += dM_zs
 
-    M_g_array.extend([M_g])
-    M_s_array.extend([M_s])
-    M_zg_array.extend([M_zg])
-    M_zs_array.extend([M_zs])
+    M_g_array.append(M_g)
+    M_s_array.append(M_s)
+    M_zg_array.append(M_zg)
+    M_zs_array.append(M_zs)
 
-M_g_array = np.array(M_g)
-M_s_array = np.array(M_s)
-M_zg_array =np.array(M_zg)
-M_zs_array =np.array(M_zs)
+M_g_array = np.array(M_g_array)
+M_s_array = np.array(M_s_array)
+M_zg_array =np.array(M_zg_array)
+M_zs_array =np.array(M_zs_array)
