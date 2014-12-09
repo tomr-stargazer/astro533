@@ -30,7 +30,10 @@ M_zs_array =[M_zs]
 i=0 
 while M_g > 0:
     i+=1
-    print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
+    if i < 6 or i > 92:
+        print "{4:02d} -- M_g: {0:.2f}    M_s: {1:.2f}    M_zg: {2:.2e}    M_zs: {3:.2e}".format(M_g, M_s, M_zg, M_zs, i)
+    elif i == 10 or i==11:
+        print ".. --  ...  ...    ...  ...     ...    ...        ...   ...".format(M_g, M_s, M_zg, M_zs, i)        
 
     # metallicity terms
     Z_g = M_zg / M_g
