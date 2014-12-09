@@ -31,7 +31,7 @@ i=0
 # New condition: let the galaxy grow to ten times its initial mass
 while M_g + M_s < 10:
     i+=1
-    print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
+    # print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
 
     # metallicity terms
     Z_g = M_zg / M_g
@@ -57,7 +57,7 @@ while M_g + M_s < 10:
     M_zg_array.append(M_zg)
     M_zs_array.append(M_zs)
 
-M_g_array = np.array(M_g_array)
-M_s_array = np.array(M_s_array)
-M_zg_array =np.array(M_zg_array)
-M_zs_array =np.array(M_zs_array)
+M_g_array3 = np.array(M_g_array)
+M_s_array3 = np.array(M_s_array)
+M_zg_array3 =np.array(M_zg_array)
+M_zs_array3 =np.array(M_zs_array)
