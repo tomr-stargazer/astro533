@@ -36,7 +36,7 @@ def closedbox_with_outflow_and_infall(SFR_per_timestep=0.01, p_yield=0.02, outfl
     # New condition: let the galaxy grow to ten times its initial mass
     while M_g + M_s < mass_cutoff:
         i+=1
-        print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
+        # print "{4} -- M_g: {0}    M_s: {1}    M_zg: {2}    M_zs: {3}".format(M_g, M_s, M_zg, M_zs, i)
 
         # metallicity terms
         Z_g = M_zg / M_g
@@ -99,3 +99,26 @@ ax_star.invert_xaxis()
 ax_gas.invert_xaxis()
 
 plt.show()
+
+eta_array = np.logspace(-1, 2, 10)
+zs_list = []
+
+for eta in eta_array:
+
+    M_g_array, M_s_array, M_zg_array, M_zs_array = closedbox_with_outflow_and_infall(outflow_relative_to_SFR=eta)
+    Z_s_array = M_zs_array / M_s_array
+    mu_array = M_g_array / (M_g_array + M_s_array)
+
+    final_Zs = np.nanmax(Z_s_array)
+    # print eta, final_Zs
+    zs_list.append(final_Zs)
+
+zs_array = np.array(zs_list)
+
+fig3 = plt.figure()
+plt.plot(eta_array, zs_array)
+plt.loglog()
+
+plt.xlabel(r"$\eta$ (mass loading factor)")
+plt.ylabel(r"$Z_*$ (Average metallicity of stars)")
+
